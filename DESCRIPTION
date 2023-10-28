@@ -58,9 +58,10 @@ Language: en-US
 LazyData: true
 Depends: 
     R (>= 4.3.0)
-Config/Needs/dev: 
+Config/Needs/development: 
     devtools, 
     knitr,
+    pkgdown,
     roxygen2, 
     testthat,
     usethis

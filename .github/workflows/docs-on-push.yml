@@ -6,9 +6,12 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  ACTIONS_STEP_DEBUG: true
+
 jobs:
-  setup-dev-env:
-    name: Setup Dev Environment
+  build-docs:
+    name: 📖 Build the docs
     environment: development
     runs-on: ubuntu-latest
     concurrency:
@@ -53,28 +56,8 @@ jobs:
             any::pkgdown
             local::.
           needs: |
-            dev
-      - id: report
-        name: Report what happened...
-        run: |
-          set -x
-          git status
-          git branch -vvv
-          env | sort
-          tree
-
-  build-docs:
-    name: Build Docs
-    needs: setup-dev-env
-    environment: development
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.action }}-${{ github.event_name != 'pull_request' || github.run_id }}
-      cancel-in-progress: true
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - id: build-site
+            development
+      - id: build-docs-site
         name: Build docs site
         run: |
           pkgdown::build_site_github_pages(
