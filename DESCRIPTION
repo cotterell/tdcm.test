@@ -1,6 +1,6 @@
 Package: tdcm.test
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Transition Diagnostic Classification Models
 Version: 0.0.0.9000
 Authors@R: c(
     person(
@@ -59,10 +59,15 @@ LazyData: true
 Depends: 
     R (>= 4.3.0)
 Config/Needs/development: 
+    covr,
     devtools, 
     knitr,
+    lintr,
     pkgdown,
     roxygen2, 
     testthat,
     usethis
+Config/testthat/edition: 3
 SystemRequirements: pandoc
+VignetteBuilder: 
+    knitr
