@@ -58,4 +58,10 @@ Language: en-US
 LazyData: true
 Depends: 
     R (>= 4.3.0)
-Config/Needs/devel: usethis
+Config/Needs/dev: 
+    devtools, 
+    knitr,
+    roxygen2, 
+    testthat,
+    usethis
+SystemRequirements: pandoc

@@ -9,6 +9,7 @@ staging/
 .Rhistory
 .RData
 inst/doc
+inst/pkgdown.yml
 .env
 docs
 *~

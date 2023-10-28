@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  pkgdown:
+  build-docs:
+    name: Build docs
     environment: dev_environment
     runs-on: ubuntu-latest
     concurrency:
@@ -15,19 +16,22 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Install dependencies
+      - id: install-system-deps
+        name: Install system dependencies
         run: |
           sudo apt-get update;
-          sudo apt-get install tree
-      - name: Checkout repository
+          sudo apt-get install build-essential coreutils tree
+      - id: checkout-pushed
+        name: Checkout pushed changes
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Determine and set REF_NAME
+      - id: set-ref-name
+        name: Set REF_NAME environment variable
         run: |
-          set -x
-          echo "github.ref_name=${{ github.ref_name }}"
-          echo "REF_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          echo github.ref_name = ${{ github.ref_name }}
+          echo GITHUB_REF = "${GITHUB_REF}"
+          echo "REF_NAME=${GITHUB_REF#refs/*/}" | tee -a $GITHUB_ENV
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
       - name: Setup R
@@ -38,13 +42,18 @@ jobs:
       - name: Setup R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
-      - name: Build pkgdown site
+          extra-packages: |
+            any::sessioninfo
+            any::pkgdown
+            local::.
+          needs: |
+            dev
+      - name: Build docs site
         run: |
           pkgdown::build_site_github_pages(
             new_process = FALSE,
             install = FALSE,
-            dest_dir = file.path("docs", Sys.getenv("RELEASE_REF"))
+            dest_dir = file.path("docs", "devel", Sys.getenv("REF_NAME"))
           )
         shell: Rscript {0}
       - name: Report
