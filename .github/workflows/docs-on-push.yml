@@ -1,4 +1,5 @@
-name: pkgdown
+name: docs-on-push
+run-name: [${{ inputs.build_id }}] docs-on-push
 
 on:
   push:
