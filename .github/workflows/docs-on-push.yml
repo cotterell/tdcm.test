@@ -12,7 +12,8 @@ jobs:
     environment: dev_environment
     runs-on: ubuntu-latest
     concurrency:
-      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+      group: ${{ github.action }}-${{ github.event_name != 'pull_request' || github.run_id }}
+      cancel-in-progress: true
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -29,8 +30,10 @@ jobs:
       - id: set-ref-name
         name: Set REF_NAME environment variable
         run: |
+          echo github.ref      = ${{ github.ref }}
           echo github.ref_name = ${{ github.ref_name }}
-          echo GITHUB_REF = "${GITHUB_REF}"
+          echo GITHUB_REF      = "${GITHUB_REF}"
+          echo ""
           echo "REF_NAME=${GITHUB_REF#refs/*/}" | tee -a $GITHUB_ENV
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
@@ -53,7 +56,7 @@ jobs:
           pkgdown::build_site_github_pages(
             new_process = FALSE,
             install = FALSE,
-            dest_dir = file.path("docs", "devel", Sys.getenv("REF_NAME"))
+            dest_dir = file.path("docs", "dev", Sys.getenv("REF_NAME"))
           )
         shell: Rscript {0}
       - name: Report
