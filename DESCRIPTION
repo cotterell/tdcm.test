@@ -2,10 +2,59 @@ Package: tdcm.test
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.0.0.9000
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: c(
+    person(
+      "Matthew", "Madison", 
+      email = "mjmadison@uga.edu", 
+      role = c("aut", "cph")
+    ),
+    person(
+      "Minjeong", "Jeon", 
+      email = "mjjeon@ucla.edu", 
+      role = c("aut", "cph")
+    ),
+    person(
+      "Michael E.", "Cotterell",
+      email = "mepcott@uga.edu", 
+      role = c("aut", "cre", "cph"),
+      comment = c(ORCID = "0000-0002-4302-0891")
+    ),
+    person(
+      "University of Georgia", 
+      role = c("cph"),
+      comment = c(
+        "The content and opinions expressed in this material do not necessarily 
+        reflect the views of nor are they endorsed by the University of Georgia 
+        or the University System of Georgia."
+      )
+    ),
+    person(
+      "Institute of Education Sciences",
+      role = c("fnd"),
+      comment = c(
+        "This work is supported by the U.S. Department of Education Institute of
+        Education Sciences under IES Award Number R305D220020. Any opinions, 
+        findings, conclusions or recommendations expressed in this material are 
+        those of the author(s) and do not necessarily reflect those of the 
+        Institute of Educational Sciences or the U.S. Department of Education."
+      )
+    )
+  )
+Description: Diagnostic classification models (DCMs) can provide useful 
+    information about students' strengths and weaknesses in an academic domain 
+    beyond the norm-referenced or percentile results typically achieved through 
+    item response theory. DCMs, however, need to be able to accommodate the 
+    multilevel framework in which most education takes place, or they run the 
+    risk of providing substantially inaccurate results. The purpose of this 
+    project is to develop and make accessible to applied researchers a 
+    multilevel extension to the longitudinal diagnostic classification model 
+    (DCM) to help researchers take into account contextual effects that can 
+    impact the fidelity and effectiveness of an educational intervention.
+License: MIT + file LICENSE
+URL: https://github.com/cotterell/tdcm
+BugReports: https://github.com/cotterell/tdcm/issues
 Encoding: UTF-8
+Language: en-US
 LazyData: true
+Depends: 
+    R (>= 3.1.0)
