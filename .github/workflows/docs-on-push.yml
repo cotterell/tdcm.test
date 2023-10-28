@@ -1,13 +1,10 @@
 name: docs-on-push
-run-name: [${{ inputs.build_id }}] docs-on-push
+run-name: ${{ github.action }} ${{ github.ref_name }}
 
 on:
   push:
     branches:
       - main
-      - 'releases/**'
-  release:
-    types: [published]
   workflow_dispatch:
 
 jobs:
@@ -27,8 +24,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Determine and set RELEASE_REF
-        run: echo "RELEASE_REF=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Determine and set REF_NAME
+        run: |
+          set -x
+          echo "github.ref_name=${{ github.ref_name }}"
+          echo "REF_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
       - name: Setup R
