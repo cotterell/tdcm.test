@@ -100,7 +100,7 @@ jobs:
           add_options: '--force'
           branch: docs
           commit_message: Apply changes for ${{ github.ref }}
-          file_pattern: 'refs/${{ github.ref_name }}'
+          file_pattern: './refs/${{ github.ref_name }}'
       - id: report3
         name: Report what happened...
         run: |
