@@ -102,7 +102,7 @@ jobs:
         with:
           branch: docs
           commit_message: Apply changes for branch ${{ github.ref }}
-      - id: report2
+      - id: report3
         name: Report what happened...
         run: |
           set -x
