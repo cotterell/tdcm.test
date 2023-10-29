@@ -67,7 +67,7 @@ jobs:
           pkgdown::build_site_github_pages(
             new_process = FALSE,
             install = FALSE,
-            dest_dir = file.path("refs", ${{ github.ref_name }}")
+            dest_dir = file.path("refs", "${{ github.ref_name }}")
           )
         shell: Rscript {0}
       - id: report1
