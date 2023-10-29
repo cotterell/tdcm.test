@@ -51,7 +51,7 @@ Description: Diagnostic classification models (DCMs) can provide useful
     (DCM) to help researchers take into account contextual effects that can 
     impact the fidelity and effectiveness of an educational intervention.
 License: MIT + file LICENSE
-URL: https://github.com/cotterell/tdcm
+URL: https://github.com/cotterell/tdcm.test
 BugReports: https://github.com/cotterell/tdcm/issues
 Encoding: UTF-8
 Language: en-US

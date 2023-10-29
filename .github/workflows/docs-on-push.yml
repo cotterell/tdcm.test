@@ -97,10 +97,10 @@ jobs:
         name: Automatically commit docs branch
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          add_options: '--force'
+          add_options: '-f'
           branch: docs
           commit_message: Apply changes for ${{ github.ref }}
-          file_pattern: 'refs/*'
+          file_pattern: 'refs/${{ github.ref_name }}'
       - id: report3
         name: Report what happened...
         run: |
