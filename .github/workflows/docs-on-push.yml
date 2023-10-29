@@ -86,6 +86,7 @@ jobs:
         name: Checkout docs branch
         uses: actions/checkout@v4
         with:
+          clean: false
           ref: docs
           fetch-depth: 0
       - id: report2
