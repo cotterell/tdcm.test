@@ -11,12 +11,14 @@ env:
 
 jobs:
   build-docs:
-    name: 📖 Build the docs
+    name: 📖  Build the docs
     environment: development
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.action }}-${{ github.event_name != 'pull_request' || github.run_id }}
       cancel-in-progress: true
+    permissions:
+      contents: write
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -33,11 +35,7 @@ jobs:
       - id: set-ref-name
         name: Set REF_NAME environment variable
         run: |
-          echo github.ref      = ${{ github.ref }}
-          echo github.ref_name = ${{ github.ref_name }}
-          echo GITHUB_REF      = "${GITHUB_REF}"
-          echo ""
-          echo "REF_NAME=${GITHUB_REF#refs/*/}" | tee -a $GITHUB_ENV
+          echo "REF_NAME=${{ github.ref }}" | tee -a $GITHUB_ENV
       - id: setup-pandoc
         name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@v2
@@ -76,7 +74,35 @@ jobs:
             dest_dir = file.path("docs", "dev", Sys.getenv("REF_NAME"))
           )
         shell: Rscript {0}
-      - id: report
+      - id: report1
+        name: Report what happened...
+        run: |
+          set -x
+          git status
+          git branch -vvv
+          env | sort
+          tree
+      - id: checkout-docs-branch
+        name: Checkout docs branch
+        uses: actions/checkout@v4
+        with:
+          ref: docs
+          fetch-depth: 0
+      - id: report2
+        name: Report what happened...
+        run: |
+          set -x
+          git status
+          git branch -vvv
+          env | sort
+          tree
+      - id: auto-commit
+        name: Automatically commit docs branch
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: docs
+          commit_message: Apply changes for branch ${{ github.ref }}
+      - id: report2
         name: Report what happened...
         run: |
           set -x
