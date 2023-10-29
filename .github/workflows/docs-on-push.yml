@@ -57,6 +57,16 @@ jobs:
             local::.
           needs: |
             development
+      - id: build-readme
+        name: Build README.md
+        run: |
+          devtools::build_readme()
+        shell: Rscript {0}
+      - id: build-docs
+        name: Build docs
+        run: |
+          devtools::document()
+        shell: Rscript {0}
       - id: build-docs-site
         name: Build docs site
         run: |

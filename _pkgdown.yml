@@ -10,6 +10,15 @@ template:
     heading_font: {google: "Recursive"}
     code_font: {google: "Roboto Mono"}
 
+navbar:
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: Category A
+      - text: Title A1
+        href: articles/a1.html
+
 deploy:
   install_metadata: true
 

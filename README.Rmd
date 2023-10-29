@@ -1,22 +1,32 @@
+---
+output: 
+  github_document:
+    md_extensions: -tex_math_dollars-tex_math_single_backslash+raw_html
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/"
+)
+```
 
 # Transition Diagnostic Classification Models
 
 ## Installation
 
-<div class=".pkgdown-release">
-
-``` r
+::: .pkgdown-release
+```{r, eval = FALSE}
 # Install released version from CRAN
 # !!!! comming soon !!!!
 ```
+:::
 
-</div>
-
-<div class=".pkgdown-devel">
-
-``` r
+::: .pkgdown-devel
+```{r, eval = FALSE}
 # Install devtools, if needed
 if (!require("devtools")) {
     install.packages("devtools")
@@ -25,5 +35,4 @@ if (!require("devtools")) {
 # Install development version of tdcm from GitHub
 devtools::install_github("cotterell/tdcm")
 ```
-
-</div>
+:::
