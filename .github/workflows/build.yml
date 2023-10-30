@@ -48,11 +48,14 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            any::sessioninfo
+            any::devtools
+            any::knitr
             any::pkgdown
+            any::roxygen2
+            any::sessioninfo
+            any::testthat
             local::.
-      - id: build-readme
-        name: devtools::build
+      - name: Build
         run: |
           devtools::build(binary = FALSE)
         shell: Rscript {0}
