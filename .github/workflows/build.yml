@@ -39,6 +39,10 @@ jobs:
             local::.
           needs: |
             dev
+      - uses: actions/upload-artifact@v2
+        with:
+          name: tdcm-prep-artifact
+          path: .
   lint:
     name: Lint the package
     needs: prep
@@ -50,10 +54,17 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+        name: tdcm-prep-artifact
       - name: Lint
         run: |
           lintr::lint_package()
         shell: Rscript {0}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: tdcm-lint-artifact
+          path: .
   build:
     name: Build the package
     needs: lint
@@ -67,14 +78,24 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+        name: tdcm-lint-artifact
       - name: Build
         run: |
+          # build
           devtools::build_readme()
           devtools::check(
+            check_dir = ".",
             cran = TRUE,
             document = TRUE,
             incoming = FALSE,
+            manual = TRUE,
             remote = FALSE,
             vignettes = TRUE
           )
         shell: Rscript {0}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: tdcm-build-artifact
+          path: .
