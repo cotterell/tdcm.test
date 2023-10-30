@@ -80,7 +80,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-        name: tdcm-lint-artifact
+          name: tdcm-lint-artifact
       - name: Build
         run: |
           # build
