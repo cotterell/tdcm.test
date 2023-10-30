@@ -1,0 +1,63 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  ACTIONS_STEP_DEBUG: true
+
+jobs:
+  build:
+    name: Build the package
+    environment: development
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.action }}-${{ github.event_name != 'pull_request' || github.run_id }}
+      cancel-in-progress: true
+    permissions:
+      contents: write
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Print environment
+        run: |
+          env | sort
+      - id: checkout-pushed
+        name: Checkout pushed changes
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Report what happened...
+        run: |
+          git branch -a -vvv
+          git status -b --porcelain
+      - id: setup-pandoc
+        name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+      - id: setup-r
+        name: Setup R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          version: 'renv'
+          use-public-rspm: true
+      - id: setup-r-dependencies
+        name: Setup R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::sessioninfo
+            any::pkgdown
+            local::.
+      - id: build-readme
+        name: devtools::build
+        run: |
+          devtools::build(binary = FALSE)
+        shell: Rscript {0}
+      - name: Report what happened...
+        run: |
+          git branch -a -vvv
+          git status -b --porcelain
+          ls -R .
