@@ -10,8 +10,8 @@ env:
   ACTIONS_STEP_DEBUG: true
 
 jobs:
-  prep:
-    name: Prepare the development environment
+  build:
+    name: Prepare to build
     environment: development
     runs-on: ubuntu-latest
     concurrency:
@@ -39,51 +39,13 @@ jobs:
             local::.
           needs: |
             dev
-      - uses: actions/upload-artifact@v2
-        with:
-          name: tdcm-prep-artifact
-          path: .
-  lint:
-    name: Lint the package
-    needs: prep
-    environment: development
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.action }}-${{ github.event_name != 'pull_request' || github.run_id }}
-      cancel-in-progress: true
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: tdcm-prep-artifact
       - name: Lint
         run: |
           lintr::lint_package()
         shell: Rscript {0}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: tdcm-lint-artifact
-          path: .
-  build:
-    name: Build the package
-    needs: lint
-    environment: development
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.action }}-${{ github.event_name != 'pull_request' || github.run_id }}
-      cancel-in-progress: true
-    permissions:
-      contents: write
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: tdcm-lint-artifact
       - name: Build
         run: |
-          # build
+          # build script
           devtools::build_readme()
           devtools::check(
             check_dir = ".",
