@@ -57,7 +57,14 @@ jobs:
             local::.
       - name: Build
         run: |
-          devtools::build(binary = FALSE)
+          devtools::build_readme()
+          devtools::check(
+            cran = TRUE,
+            document = TRUE,
+            incoming = FALSE,
+            remote = FALSE,
+            vignettes = TRUE
+          )
         shell: Rscript {0}
       - name: Report what happened...
         run: |
