@@ -59,6 +59,7 @@ jobs:
       - name: Lint
         run: |
           lintr::lint_package()
+        shell: Rscript {0}
       - name: Build
         run: |
           devtools::build_readme()
