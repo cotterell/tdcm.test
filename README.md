@@ -19,7 +19,7 @@
 ``` r
 # Install devtools, if needed
 if (!require("devtools")) {
-    install.packages("devtools")
+  install.packages("devtools")
 } # if
 
 # Install development version of tdcm from GitHub
