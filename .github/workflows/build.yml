@@ -66,8 +66,10 @@ jobs:
             vignettes = TRUE
           )
         shell: Rscript {0}
-      - name: Report what happened...
+      - name: Report what happened (git)...
         run: |
           git branch -a -vvv
           git status -b --porcelain
+      - name: Report what happened (files)...
+        run: |
           ls -R .
