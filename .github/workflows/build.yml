@@ -53,8 +53,12 @@ jobs:
             any::pkgdown
             any::roxygen2
             any::sessioninfo
+            any::styler
             any::testthat
             local::.
+      - name: Lint
+        run: |
+          lintr::lint_package()
       - name: Build
         run: |
           devtools::build_readme()
