@@ -48,14 +48,10 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            any::devtools
-            any::knitr
-            any::pkgdown
-            any::roxygen2
             any::sessioninfo
-            any::styler
-            any::testthat
             local::.
+          needs: |
+            dev
       - name: Lint
         run: |
           lintr::lint_package()

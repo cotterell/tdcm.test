@@ -58,13 +58,16 @@ Language: en-US
 LazyData: true
 Depends: 
     R (>= 4.3.0)
-Config/Needs/development: 
+Config/Needs/dev:
     covr,
     devtools, 
     knitr,
     lintr,
+    markdown,
     pkgdown,
-    roxygen2, 
+    rmarkdown,
+    roxygen2,
+    styler,
     testthat,
     usethis
 Config/testthat/edition: 3
@@ -72,3 +75,6 @@ SystemRequirements: pandoc
 VignetteBuilder: 
     knitr
 RoxygenNote: 7.2.3
+Suggests: 
+    knitr,
+    rmarkdown
